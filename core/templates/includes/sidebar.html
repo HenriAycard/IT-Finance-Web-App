@@ -1,0 +1,117 @@
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2" data-background-color="dark2">	
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+
+				{% if request.user.is_authenticated %}	
+					<div class="user">
+						<div class="avatar-sm float-left mr-2">
+							<img src="/static/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+						</div>
+						<div class="info">
+							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									{{ request.user.username }}
+									<span class="user-level">
+										{{ request.user.email }}
+									</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample">
+								<ul class="nav">
+									<li>
+										<a href="#profile">
+											<span class="link-collapse">My Profile</span>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'logout' %}">
+											<span class="link-collapse">Logout</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav nav-primary">
+						<li class="nav-item {% if 'index' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+								<i class="fas fa-home"></i>
+								<p>Dashboard</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="dashboard">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="http://51.38.187.84:8000/">
+											<span class="sub-item">PEA</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Actions</h4>
+						</li>
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas fa-layer-group"></i>
+								<p>Whatchlist</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'layout' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#sidebarLayouts">
+								<i class="fas fa-th-list"></i>
+								<p>Portefolio</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'form' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#forms">
+								<i class="fas fa-pen-square"></i>
+								<p>Forex</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'tables' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#tables">
+								<i class="fas fa-table"></i>
+								<p>Alert</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'maps' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#maps">
+								<i class="fas fa-map-marker-alt"></i>
+								<p>Messages</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'charts' in segment %} active {% endif %}">
+							<a data-toggle="collapse" href="#charts">
+								<i class="far fa-chart-bar"></i>
+								<p>Analytics</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'widgets' in segment %} active {% endif %}">
+							<a href="/widgets.html">
+								<i class="fas fa-desktop"></i>
+								<p>Widgets</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#submenu">
+								<i class="fas fa-bars"></i>
+								<p>Settings</p>
+							</a>
+						</li>
+					</ul>
+				{% else %}
+				{% endif %}
+				</div>
+			</div>
+		</div>
+        <!-- End Sidebar -->
+        

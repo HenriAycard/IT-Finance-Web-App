@@ -1,0 +1,245 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+			
+	<div class="content">
+		<div class="page-inner">
+			<div class="row">
+				<div class="col-6 col-sm-4 col-lg-2">
+					<div class="card">
+						<div class="card-body p-3 text-center">
+							<div class="text-right text-success">
+								2%
+								<i class="fa fa-chevron-up"></i>
+							</div>
+							<div class="h1 m-0">{{ balance }}</div>
+							<div class="text-muted mb-3">Balance</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2">
+					<div class="card">
+						<div class="card-body p-3 text-center">
+							<div class="text-right text-danger">
+								2%
+								<i class="fa fa-chevron-up"></i>
+							</div>
+							<div class="h1 m-0">{{ performance }}</div>
+							<div class="text-muted mb-3">Performance</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2">
+					<div class="card">
+						<div class="card-body p-3 text-center">
+							<div class="text-right text-success">
+								1.03%
+								<i class="fa fa-chevron-up"></i>
+							</div>
+							<div class="h1 m-0">{{ cac40 }}</div>
+							<div class="text-muted mb-3">Index CAC 40</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2">
+					<div class="card">
+						<div class="card-body p-3 text-center">
+							<div class="text-right text-success">
+								2%
+								<i class="fa fa-chevron-up"></i>
+							</div>
+							<div class="h1 m-0">{{ PNL_Day }}</div>
+							<div class="text-muted mb-3">P/L jour</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-sm-4 col-lg-2">
+					<div class="card">
+						<div class="card-body p-3 text-center">
+							<div class="text-right text-success">
+								10%
+								<i class="fa fa-chevron-up"></i>
+							</div>
+							<div class="h1 m-0">{{ PNL_PositionOpen }}</div>
+							<div class="text-muted mb-3">P/L p. ouvertes</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Total Cumulative Investments Over Time</div>
+						</div>
+						<div class="card-body">
+							<div class="chart-container">
+								<canvas id="htmlLegendsChart"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo.js"></script>
+	<script src="/static/assets/js/demo.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+	<script>
+		htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
+
+		var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
+			type: 'scatter',
+			data: {
+			  labels: {{ fig1_label|safe }},
+			  datasets: [{
+				type: 'line',
+				label: 'Cum ROI Mult',
+				data: {{ fig1_cum_ticker_roi|safe }},
+				borderColor: 'rgb(102, 51, 0)',
+				backgroundColor: 'rgb(102, 51, 0)',
+				yAxisID: 'right-y-axis'
+			  }, {
+				type: 'bar',
+				label: 'Cum Invest',
+				data: {{ fig1_cum_invt|safe }},
+				borderColor: 'rgb(0, 51, 153)',
+				backgroundColor: 'rgb(0, 51, 153)',
+				yAxisID: 'left-y-axis'
+			  }, {
+				type: 'bar',
+				label: 'Cum CAC Index',
+				data: {{ fig1_cum_is_return|safe }},
+				borderColor: 'rgb(204, 0, 0)',
+				backgroundColor: 'rgb(204, 0, 0)',
+				yAxisID: 'left-y-axis'
+			  }, {
+				type: 'bar',
+				label: 'Cum Ticker',
+				data: {{ fig1_cum_ticker_returns|safe }},
+				borderColor: 'rgb(0, 153, 51)',
+				backgroundColor: 'rgb(0, 153, 51)',
+				yAxisID: 'left-y-axis'
+			  }]
+			},
+			options: {
+				scales: {
+					'left-y-axis': {
+						type: 'linear',
+						position: 'left'
+					},
+					'right-y-axis': {
+						type: 'linear',
+						position: 'right'
+					}
+				}
+			}
+		});
+		Circles.create({
+			id:'circles-1',
+			radius:45,
+			value:60,
+			maxValue:100,
+			width:7,
+			text: 5,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		Circles.create({
+			id:'circles-2',
+			radius:45,
+			value:70,
+			maxValue:100,
+			width:7,
+			text: 36,
+			colors:['#f1f1f1', '#2BB930'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		Circles.create({
+			id:'circles-3',
+			radius:45,
+			value:40,
+			maxValue:100,
+			width:7,
+			text: 12,
+			colors:['#f1f1f1', '#F25961'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+
+		var mytotalIncomeChart = new Chart(totalIncomeChart, {
+			type: 'bar',
+			data: {
+				labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+
+		$('#lineChart').sparkline([105,103,123,100,95,105,115], {
+			type: 'line',
+			height: '70',
+			width: '100%',
+			lineWidth: '2',
+			lineColor: '#ffa534',
+			fillColor: 'rgba(255, 165, 52, .14)'
+		});
+	</script>
+
+{% endblock javascripts %}
